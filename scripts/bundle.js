@@ -32584,19 +32584,19 @@ module.exports = React.createClass({
 			React.createElement(
 				'td',
 				null,
-				this.props.cat.get('name')
+				this.props.kitty.get('name')
 			),
 			React.createElement(
 				'td',
 				null,
-				this.props.cat.get('type')
+				this.props.kitty.get('type')
 			),
 			React.createElement(
 				'td',
 				null,
 				React.createElement(
 					'a',
-					{ href: '{this.props.cat.get(\'picture\')}' },
+					{ href: '{this.props.kitty.get(\'picture\')}' },
 					'Picture Link'
 				)
 			)
@@ -32614,6 +32614,9 @@ module.exports = React.createClass({
 	displayName: 'exports',
 
 	render: function render() {
+		var catRows = this.props.cats.map(function (cat) {
+			return React.createElement(CatComponent, { key: cat.get('name'), kitty: cat });
+		});
 		return React.createElement(
 			'div',
 			{ className: 'row' },
@@ -32648,7 +32651,11 @@ module.exports = React.createClass({
 						)
 					)
 				),
-				React.createElement('tbody', null)
+				React.createElement(
+					'tbody',
+					null,
+					catRows
+				)
 			)
 		);
 	}
@@ -32701,6 +32708,9 @@ module.exports = React.createClass({
 	displayName: 'exports',
 
 	render: function render() {
+		var productRows = this.props.products.map(function (item) {
+			return React.createElement(ProductComponent, { key: item.get('description'), product: item });
+		});
 		return React.createElement(
 			'div',
 			{ className: 'row' },
@@ -32740,7 +32750,11 @@ module.exports = React.createClass({
 						)
 					)
 				),
-				React.createElement('tbody', null)
+				React.createElement(
+					'tbody',
+					null,
+					productRows
+				)
 			)
 		);
 	}
@@ -32761,42 +32775,42 @@ module.exports = React.createClass({
 			React.createElement(
 				'td',
 				null,
-				'-'
+				this.props.qbstat.get('name')
 			),
 			React.createElement(
 				'td',
 				null,
-				'-'
+				this.props.qbstat.get('team')
 			),
 			React.createElement(
 				'td',
 				null,
-				'-'
+				this.props.qbstat.get('attempts')
 			),
 			React.createElement(
 				'td',
 				null,
-				'-'
+				this.props.qbstat.get('completions')
 			),
 			React.createElement(
 				'td',
 				null,
-				'-'
+				this.props.qbstat.get('yards')
 			),
 			React.createElement(
 				'td',
 				null,
-				'-'
+				this.props.qbstat.get('touchdowns')
 			),
 			React.createElement(
 				'td',
 				null,
-				'-'
+				this.props.qbstat.get('interceptions')
 			),
 			React.createElement(
 				'td',
 				null,
-				'-'
+				this.props.qbstat.get('sacks')
 			)
 		);
 	}
@@ -32812,6 +32826,9 @@ module.exports = React.createClass({
 	displayName: 'exports',
 
 	render: function render() {
+		var qbRow = this.props.quarterbacks.map(function (qb) {
+			return React.createElement(QuarterbackComponent, { key: qb.get('name'), qbstat: qb });
+		});
 		return React.createElement(
 			'div',
 			{ className: 'row' },
@@ -32871,7 +32888,11 @@ module.exports = React.createClass({
 						)
 					)
 				),
-				React.createElement('tbody', null)
+				React.createElement(
+					'tbody',
+					null,
+					qbRow
+				)
 			)
 		);
 	}
@@ -32885,7 +32906,15 @@ var React = require('react');
 module.exports = React.createClass({
 	displayName: 'exports',
 
-	render: function render() {}
+	render: function render() {
+		return React.createElement(
+			'h2',
+			null,
+			this.props.TD.get('description'),
+			' - ',
+			this.props.TD.get('completed').toString()
+		);
+	}
 });
 
 },{"react":159}],171:[function(require,module,exports){
@@ -32898,6 +32927,10 @@ module.exports = React.createClass({
 	displayName: 'exports',
 
 	render: function render() {
+		var todoRow = this.props.todos.map(function (td) {
+			return React.createElement(TodoComponent, { key: td.get('description'), TD: td });
+		});
+
 		return React.createElement(
 			'div',
 			{ className: 'row' },
@@ -32905,7 +32938,9 @@ module.exports = React.createClass({
 				'h1',
 				null,
 				'Todos'
-			)
+			),
+			React.createElement('hr', null),
+			todoRow
 		);
 	}
 });
@@ -32961,6 +32996,7 @@ var Router = Backbone.Router.extend({
 		'todos': 'todos'
 	},
 	cats: function cats() {
+		console.log(catData);
 		React.render(React.createElement(CatList, { cats: catData }), appEl);
 	},
 	products: function products() {

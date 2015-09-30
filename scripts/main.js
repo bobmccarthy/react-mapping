@@ -20,6 +20,7 @@ var Router = Backbone.Router.extend({
 		'todos': 'todos',
 	},
 	cats: function() {
+		console.log(catData);
 		React.render(
 			<CatList cats={catData} />,
 			appEl
